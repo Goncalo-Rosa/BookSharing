@@ -1,0 +1,78 @@
+@using Org.BouncyCastle.Asn1.Ocsp
+@model IEnumerable<BookSharing.Models.Book>
+
+
+@{
+    ViewBag.Title = "Books";
+}
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap" rel="stylesheet">
+
+<div class="bg-white" style="border-radius: 20px;">
+    <div style="padding: 20px 40px 20px 40px;">
+<h1>Books for Sharing</h1>
+
+    <div class="form-group d-flex justify-content-around">
+        @Html.DropDownList(
+            "Teste",
+            new SelectList(
+            Model.Select(x => new { Value = x.genero, Text = x.genero}),
+            "Value",
+            "Text"
+            ),
+            new { @class = "form-control  mr-4", onchange = @"document.location.href = '/Book/IndexShare?value=' +
+        this.options[this.selectedIndex].value;"}
+            )
+            
+
+            @Html.DropDownList(
+            "Teste",
+            new SelectList(
+            Model.Select(x => new { Value = x.idioma, Text = x.idioma}),
+            "Value",
+            "Text"
+            ),
+            new { @class = "form-control  ml-4", onchange = @"document.location.href = '/Book/IndexShare?Language=' +
+        this.options[this.selectedIndex].value;"}
+            )
+    </div>
+
+
+
+<div class="container">
+    <div class="row">
+    @if (Model.Any())
+    {
+        @foreach (var item in Model)
+        {
+            <div class="col col-md-auto mt-4" style="border-radius: 10px;">
+                    <div class="card h-100">
+                        <img class="card-img-top" src="~/images/@item.PhotoPath" alt="Book image" style="width:100%">
+                            <h4 class="card-title"><b><u>Name</u>: </b>@item.BookName</h4>
+                            <p class="card-body p-0"><b>Author: </b> @item.Author</p>
+                            <p class="card-text"><b>Description: </b>@item.BookDescription</p>
+                            <div class="d-flex justify-content-between">
+                                <p class="card-subtitle mb-2 ml-5 text-muted"><b>Catergory:</b> @item.genero</p>
+                                <p class="card-subtitle mb-2 mr-5 text-muted"><b>Language:</b> @item.idioma</p>
+                            </div>
+                            <a href="https://wa.me/@item.Contact" class="btn btn-success">Contact Me</a>
+                    </div>
+            </div>
+        }
+    }
+    else
+    {
+        <div class="alert alert-danger col-md-12 text-center" role="alert">
+            <h4>There are no Books from other people!</h4>
+        </div>
+    }
+        </div>
+
+</div>
+</div>
+</div>
+
+<script>
+    $(function () {
+        $('.selectpicker').selectpicker();
+    });
+</script>

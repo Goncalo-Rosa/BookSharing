@@ -1,0 +1,44 @@
+@using Microsoft.AspNetCore.Identity
+@model Microsoft.AspNetCore.Identity.IdentityUser
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "_Layout";
+}
+<div class="bg-white" style="border-radius: 20px;">
+    <div style="padding: 20px 40px 20px 40px;">
+
+        <h1>User Details</h1>
+
+        <div>
+            <hr />
+            <dl class="row">
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Id)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Id)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.UserName)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.UserName)
+                </dd>
+                <dt class="col-sm-2">
+                    Roles
+                </dt>
+                <ul class="col-sm-10">
+                    @foreach (string item in ViewBag.UserRoles)
+                    {
+                        <li style="list-style: none;">@item</li>
+                    }
+                </ul>
+
+            </dl>
+        </div>
+        <div>
+            <a asp-action="ListAllUsers" class="btn btn-secondary mb-2 mt-2">Back to List</a>
+        </div>
+    </div>
+</div>

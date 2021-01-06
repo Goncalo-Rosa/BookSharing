@@ -1,0 +1,124 @@
+﻿@using Microsoft.AspNetCore.Identity;
+@inject UserManager<IdentityUser> _userManager;
+@inject SignInManager<IdentityUser> _signInManager;
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - BookSharing</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    @RenderSection("Styles", required: false)
+</head>
+
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light box-shadow mb-3">
+            <div class="container">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">BookSharing</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse"
+                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                        @if (_signInManager.IsSignedIn(User))
+                        {
+                            <div class="dropdown">
+                                <a class="nav-link text-dark" href="#" role="button" id="dropdownMenuLink"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Books
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Book" asp-action="Index">Your
+                                        Books</a>
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Book" asp-action="IndexShare">
+                                        Books to share</a>
+                                </div>
+                            </div>
+                        }
+
+                        @if (_signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Role" asp-action="Index">Roles</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Account"
+                                    asp-action="ListAllUsers">Users</a>
+                            </li>
+                        }
+                        @if (_signInManager.IsSignedIn(User))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Account"
+                                    asp-action="Contact">Contact</a>
+                            </li>
+                        }
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home"
+                                asp-action="Privacy">Privacy</a>
+                        </li>
+                    </ul>
+                </div>
+                <ul class="navbar-nav ml-auto list-inline">
+                    @if (_signInManager.IsSignedIn(User))
+                    {
+                        @* color: #ffffff;
+                            font-weight: bold;
+                            text-shadow: 0px 0px 2px #fc033d, 0px 0px 3px #fc033d, 0px 0px 7px #fc033d, 0px 0px 5px #fc033d, 0px
+                            0px 8px #fc033d, 0px 0px 8px #fc033d;
+                            background: no-repeat,url(https://vacban.wtf/uploads/sparkles/sparkle_white.gif);
+                            } *@
+                        <li class="nav-item">
+                            <a class="nav-link text-dark font-weight-bold">Hello <span
+                                    style="color: #ffffff;
+                                    font-weight: bold;
+                                    text-shadow: 0px 0px 2px #273469, 0px 0px 3px #273469, 0px 0px 7px #273469, 0px 0px 5px #273469, 0px
+                                    0px 8px #273469, 0px 0px 8px #273469;
+                                    background: no-repeat,url(https://vacban.wtf/uploads/sparkles/sparkle_white.gif);">@_userManager.GetUserName(User)</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <form asp-action="Logout" asp-controller="Account" method="POST">
+                                <button type="submit" class="btn btn-link">Logout</button>
+                            </form>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Account"
+                                asp-action="Register">Register</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Login">Login</a>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="footer text-white">
+        <div class="container">
+            &copy; 2020 - BookSharing - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+
+</html>

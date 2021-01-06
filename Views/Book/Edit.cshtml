@@ -1,0 +1,88 @@
+@model BookSharing.Models.ViewModels.EditBookViewModel;
+
+@{
+    ViewBag.Title = "Edit Book";
+}
+<div class="bg-white" style="border-radius: 20px;">
+    <div style="padding: 20px 40px 20px 40px;">
+        <h1>Edit Book</h1>
+
+        <div class="row">
+            <div class="col-md-6">
+                <form asp-action="Edit" asp-controller="Book" enctype="multipart/form-data" method="POST">
+                    <div asp-validation-summary="All" class="text-danger"></div>
+                    <input asp-for="BookId" type="hidden">
+                    <input asp-for="EmailCreator" type="hidden" value="@Model.EmailCreator">
+                    <input asp-for="EmailCreator" type="hidden" value="@Model.Contact">
+                    <input asp-for="ExistingPhotoPath" type="hidden">
+
+                    <div class="form-group">
+                        <label asp-for="BookName"></label>
+                        <input asp-for="BookName" class="form-control">
+                        <span asp-validation-for="BookName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="BookDescription"></label>
+                        <input asp-for="BookDescription" class="form-control">
+                        <span asp-validation-for="BookDescription" class="text-danger"></span>
+
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Author"></label>
+                        <input asp-for="Author" class="form-control">
+                        <span asp-validation-for="Author" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="genero"></label>
+                        <select asp-for="genero" class="form-control">
+                            <option value="" selected disabled hidden>Choose one option</option>
+                            <option value="Horror">Horror</option>
+                            <option value="Comedy">Comedy</option>
+                            <option value="Action">Action</option>
+                            <option value="Crime">Crime</option>
+                            <option value="Adventure">Adventure</option>
+
+                        </select>
+                        <span asp-validation-for="genero" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="idioma"></label>
+                        <select asp-for="idioma" class="form-control">
+                            <option value="" selected disabled hidden>Choose one option</option>
+                            <option value="Português">Portuguese</option>
+                            <option value="English">English</option>
+                            <option value="German">German</option>
+                            <option value="French">French</option>
+                        </select>
+                        <span asp-validation-for="idioma" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ExistingPhotoPath" class="control-label"></label>
+                        <img src="~/images/@Model.ExistingPhotoPath" alt="" height="250px" width="500px">
+                        <div class="custom-file">
+                            <input asp-for="Photo" class="form-control custom-file-input">
+                            <label class="custom-file-label">Choose a New file....</label>
+                            <span asp-validation-for="Photo" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Update</button>
+                    <a asp-action="Index" asp-controller="Book" class="btn btn-secondary">Cancel</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        $(function(){
+            $(".custom-file-input").on("change" , function(){
+                var filename = $(this).val().split("\\").pop();
+                $(this).next('.custom-file-label').html(filename);
+            })
+        })
+    </script>
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -1,0 +1,65 @@
+@model BookSharing.Models.ViewModels.RegisterViewModel
+
+@{
+    ViewBag.Title = "User Registration";
+}
+
+<div class="bg-white" style="border-radius: 20px;">
+    <div style="padding: 20px 40px 20px 40px;">
+        <h1>User Registration</h1>
+
+        <div class="row">
+            <div class="col-md-auto">
+                <form asp-action="Register" asp-controller="Account" method="POST">
+                    <div asp-validation-summary="All" class="text-danger"></div>
+                    
+                    <label asp-for="UserName"></label>
+                    <div class="input-group mb-2 mr-sm-2">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">@@</div>
+                        </div>
+                        <input asp-for="UserName" class="form-control"  placeholder="Username">
+                        <span asp-validation-for="UserName" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-row">
+                    <div class="form-group col-md-12 mb-3">
+                        <label asp-for="Email"></label>
+                        <input asp-for="Email" class="form-control"  placeholder="Enter email">
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="Password"></label>
+                            <input asp-for="Password" class="form-control"  placeholder="Password" >
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="ConfirmPassword"></label>
+                            <input asp-for="ConfirmPassword" class="form-control"  placeholder="Confirm Password">
+                            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                        </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="PhoneNumber"></label>
+                        <input asp-for="PhoneNumber" class="form-control"  placeholder="Phone Number">
+                        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="ConfirmPhoneNumber"></label>
+                        <input asp-for="ConfirmPhoneNumber" class="form-control" placeholder="Confirm Phone Number" >
+                        <span asp-validation-for="ConfirmPhoneNumber" class="text-danger"></span>
+                    </div>
+
+                    </div>
+                    <button type="submit" class="btn btn-primary">Register</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

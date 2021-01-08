@@ -222,7 +222,9 @@ namespace BookSharing.Controllers
         {
             var user = await _userManager.GetUserAsync(User);
 
-            var booksOfOthers = _context.Books.Where(b => b.EmailCreator != user.Email);
+            var booksOfOthers = _context.Books.Where(b => b.EmailCreator != user.Email && b.isRented == false);
+
+            ViewBag.Email = user.Email;
 
             if (Value != null)
             {

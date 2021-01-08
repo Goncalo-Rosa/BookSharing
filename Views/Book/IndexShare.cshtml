@@ -1,4 +1,4 @@
-@using Org.BouncyCastle.Asn1.Ocsp
+
 @model IEnumerable<BookSharing.Models.Book>
 
 
@@ -40,35 +40,46 @@
 
 <div class="container">
     <div class="row">
-    @if (Model.Any())
-    {
-        @foreach (var item in Model)
-        {
-            <div class="col col-md-auto mt-4" style="border-radius: 10px;">
-                    <div class="card h-100">
-                        <img class="card-img-top" src="~/images/@item.PhotoPath" alt="Book image" style="width:100%">
-                            <h4 class="card-title"><b><u>Name</u>: </b>@item.BookName</h4>
-                            <p class="card-body p-0"><b>Author: </b> @item.Author</p>
-                            <p class="card-text"><b>Description: </b>@item.BookDescription</p>
-                            <div class="d-flex justify-content-between">
-                                <p class="card-subtitle mb-2 ml-5 text-muted"><b>Catergory:</b> @item.genero</p>
-                                <p class="card-subtitle mb-2 mr-5 text-muted"><b>Language:</b> @item.idioma</p>
-                            </div>
-                            <a href="https://wa.me/@item.Contact" class="btn btn-success">Contact Me</a>
-                    </div>
-            </div>
-        }
-    }
-    else
-    {
-        <div class="alert alert-danger col-md-12 text-center" role="alert">
-            <h4>There are no Books from other people!</h4>
-        </div>
-    }
-        </div>
+            @if (Model.Any())
+            {
+                @foreach (var item in Model)
+                {
+                    <div class="col col-md-auto mt-4" style="border-radius: 10px;">
+                            <div class="card h-100">
+                                <img class="card-img-top" src="~/images/@item.PhotoPath" alt="Book image" style="width:100%">
+                                    <h4 class="card-title"><b><u>Name</u>: </b>@item.BookName</h4>
+                                    <p class="card-body p-0"><b>Author: </b> @item.Author</p>
+                                    <p class="card-text"><b>Description: </b>@item.BookDescription</p>
+                                    <div class="d-flex justify-content-between">
+                                        <p class="card-subtitle mb-2 ml-5 text-muted"><b>Catergory:</b> @item.genero</p>
+                                        <p class="card-subtitle mb-2 mr-5 text-muted"><b>Language:</b> @item.idioma</p>
+                                    </div>
+                                        <form asp-action="CreateOrder" asp-controller="Orders" method="POST">
+                                            <div class="d-flex bd-highlight">
+                                                <a href="https://wa.me/@item.Contact" class="btn btn-success p-2 flex-fill bd-highlight">Contact Me</a>
 
-</div>
-</div>
+                                                    <input type="hidden" name="BookId" value="@item.BookId"/>
+                                                    <input type="hidden" name="RequisitorEmail" value="@ViewBag.Email" />
+                                                    <input type="hidden" name="BookName" value="@item.BookName" />
+                                                    <input type="submit" value="Make Order" class="btn btn-danger p-2 flex-fill bd-highlight" />
+
+                                            </div>
+                                        </form>
+                            </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="alert alert-danger col-md-12 text-center" role="alert">
+                    <h4>There are no Books from other people!</h4>
+                </div>
+            }
+            
+            
+            </div>
+        </div>
+    </div>
 </div>
 
 <script>

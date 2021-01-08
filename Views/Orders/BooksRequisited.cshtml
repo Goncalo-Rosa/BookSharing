@@ -1,0 +1,47 @@
+@model IEnumerable<BookSharing.Models.AcceptedOrders>
+
+@{
+    ViewBag.Title = "Books";
+}
+<div class="bg-white" style="border-radius: 20px;">
+    <div style="padding: 20px 40px 20px 40px;">
+
+    <h1>Orders for Sharing</h1>
+
+        <div class="container">
+            <div class="row">
+            @if (Model.Any())
+            {
+                @foreach (var item in Model)
+                {
+                    <div class="col col-md-auto mt-4" style="border-radius: 10px;">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title"><u>Book Name</u>: @item.BookName</h5>
+                                <p class="card-text">User Email: @item.Email</p>
+                                <div class="d-flex bd-highlight">
+                                        <form asp-action="RemoveBooksRequisited" asp-controller="Orders" method="POST">
+                                            
+                                            <input type="hidden" name="AcceptedOrdersId" value="@item.AcceptedOrdersId"/>
+                                            <input type="hidden" name="BookName" value="@item.BookName"/>
+                                            <input type="hidden" name="Email" value="@item.Email"/>
+                                            <input type="submit" value="Return Book" class="btn btn-info p-2 flex-fill bd-highlight" />
+
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="alert alert-danger col-md-12 text-center" role="alert">
+                    <h4>You dont have any Book requisitions!</h4>
+                </div>
+            }
+                </div>
+
+        </div>
+    </div>
+</div>

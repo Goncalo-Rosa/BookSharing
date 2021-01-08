@@ -1,0 +1,56 @@
+@model IEnumerable<BookSharing.Models.Orders>
+
+@{
+    ViewBag.Title = "Books";
+}
+<div class="bg-white" style="border-radius: 20px;">
+    <div style="padding: 20px 40px 20px 40px;">
+
+    <h1>Orders for Sharing</h1>
+
+        <div class="container">
+            <div class="row">
+            @if (Model.Any())
+            {
+                @foreach (var item in Model)
+                {
+                    <div class="col col-md-auto mt-4" style="border-radius: 10px;">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <h5 class="card-title"><u>Book Name</u>: @item.OrdersId</h5>
+                                    <p class="card-text">User Email: @item.RequisitorEmail</p>
+                                    <div class="d-flex bd-highlight">
+                                            <div class="d-flex bd-highlight">
+                                                <form asp-action="AcceptOrder" asp-controller="Orders" method="POST">
+                                                    
+                                                    <input type="hidden" name="OrdersId" value="@item.OrdersId"/>
+                                                    <input type="hidden" name="BookName" value="@item.BookName"/>
+                                                    <input type="hidden" name="Email" value="@item.RequisitorEmail"/>
+                                                    <input type="submit" value="Accept Order" class="btn btn-success p-2 flex-fill bd-highlight" />
+
+                                                </form>
+                                                <form asp-action="DeclineOrder" asp-controller="Orders" method="POST">
+
+                                                    <input type="hidden" name="OrdersId" value="@item.OrdersId"/>
+                                                    <input type="hidden" name="BookName" value="@item.BookName"/>
+                                                    <input type="submit" value="Decline Order" class="btn btn-danger p-2 flex-fill bd-highlight" />
+
+                                                </form>
+                                            </div>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="alert alert-danger col-md-12 text-center" role="alert">
+                    <h4>You dont have any orders pendent!</h4>
+                </div>
+            }
+                </div>
+
+        </div>
+    </div>
+</div>

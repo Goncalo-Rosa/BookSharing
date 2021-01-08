@@ -17,6 +17,30 @@ namespace BookSharing.Migrations.Book
                 .HasAnnotation("Relational:MaxIdentifierLength", 64)
                 .HasAnnotation("ProductVersion", "5.0.0");
 
+            modelBuilder.Entity("BookSharing.Models.AcceptedOrders", b =>
+                {
+                    b.Property<int>("AcceptedOrdersId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int?>("BookId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("BookName")
+                        .IsRequired()
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.HasKey("AcceptedOrdersId");
+
+                    b.HasIndex("BookId");
+
+                    b.ToTable("AcceptedOrders");
+                });
+
             modelBuilder.Entity("BookSharing.Models.Book", b =>
                 {
                     b.Property<int>("BookId")
@@ -70,11 +94,28 @@ namespace BookSharing.Migrations.Book
                     b.Property<int?>("BookId")
                         .HasColumnType("int");
 
+                    b.Property<string>("BookName")
+                        .IsRequired()
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("RequisitorEmail")
+                        .IsRequired()
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
                     b.HasKey("OrdersId");
 
                     b.HasIndex("BookId");
 
                     b.ToTable("Orders");
+                });
+
+            modelBuilder.Entity("BookSharing.Models.AcceptedOrders", b =>
+                {
+                    b.HasOne("BookSharing.Models.Book", "Book")
+                        .WithMany("AcceptedOrders")
+                        .HasForeignKey("BookId");
+
+                    b.Navigation("Book");
                 });
 
             modelBuilder.Entity("BookSharing.Models.Orders", b =>
@@ -88,6 +129,8 @@ namespace BookSharing.Migrations.Book
 
             modelBuilder.Entity("BookSharing.Models.Book", b =>
                 {
+                    b.Navigation("AcceptedOrders");
+
                     b.Navigation("Orders");
                 });
 #pragma warning restore 612, 618

@@ -8,6 +8,7 @@ namespace BookSharing.Data
     {
         public DbSet<Book> Books { get; set; }
         public DbSet<Orders> Orders { get; set; }
+        public DbSet<AcceptedOrders> AcceptedOrders { get; set; }
         public BookContext(DbContextOptions<BookContext> options) : base(options)
         {
 
@@ -18,6 +19,7 @@ namespace BookSharing.Data
             base.OnModelCreating(builder);
             builder.Entity<Book>();
             builder.Entity<Orders>().HasOne<Book>("Book").WithMany("Orders").HasForeignKey("BookId");
+            builder.Entity<AcceptedOrders>().HasOne<Book>("Book").WithMany("AcceptedOrders").HasForeignKey("BookId");
         }
     }
 }

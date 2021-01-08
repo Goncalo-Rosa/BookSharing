@@ -9,6 +9,12 @@ namespace BookSharing.Models
         [Required]
         public int OrdersId { get; set; }
 
+        [Required]
+        public string RequisitorEmail { get; set; }
+
+        [Required]
+        public string BookName { get; set; }
+
         public Book Book { get; set; }
     }
 }

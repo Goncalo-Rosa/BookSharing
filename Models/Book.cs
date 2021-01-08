@@ -39,5 +39,6 @@ namespace BookSharing.Models
         public string PhotoPath { get; set; }
 
         public ICollection<Orders> Orders { get; set; }
+        public ICollection<AcceptedOrders> AcceptedOrders { get; set; }
     }
 }
